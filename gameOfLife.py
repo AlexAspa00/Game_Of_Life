@@ -2,7 +2,6 @@ import pygame
 import numpy as np
 import time
 import random
-
 class criatura:
     def __init__(self,nxC, nyC):
         x = random.randint(1, nxC)
