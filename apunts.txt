@@ -1,0 +1,13 @@
+
+
+SP1:
+
+SP2:
+Si tenim en compte el temps que la criatura està viva, les criatures es queden quietes, ja que així no es xoquen i moren.
+922 generacions i no troba
+11 i 12 no estable, sobreviuen perq menja amb sort 3 tirant recte i frena abans de xocar / f(fitness) = ((time.time() - self.time_after_eating) * (self.total_ate))
+13 no
+
+19 bona
+provo max_stagnation = 10 i species_elitism a 0
+es sort arribar a una solució, al haver poques possibilitats costa arribar a una solució
