@@ -1,3 +1,7 @@
+'''
+This file is used to test the checkpoints created.
+'''
+
 import pickle
 
 import numpy as np
