@@ -1,0 +1,63 @@
+
+TEST 0 a 20
+
+SP1:
+A vegades arriba al fitness pero no prou intel·ligent
+
+SP2:
+Si tenim en compte el temps que la criatura està viva, les criatures es queden quietes, ja que així no es xoquen i moren.
+922 generacions i no troba
+11 i 12 no estable, sobreviuen perq menja amb sort 3 tirant recte i frena abans de xocar / f(fitness) = ((time.time() - self.time_after_eating) * (self.total_ate))
+13 no
+
+19 bona
+provo max_stagnation = 10 i species_elitism a 0
+es sort arribar a una solució, al haver poques possibilitats costa arribar a una solució
+
+
+TEST 20 a X
+
+He introduit el concepte de l'escut
+
+SP1:
+
+SP2:
+Troba la solució quan SP1 ha desaparegut, llavors agafa com a optima la solució de no activar l'escut ja que no té depredadors
+22 - no es bona
+23 - self.total_ate + self.protected * 0.2
+25 - reduir inputs
+
+Evolucionar 2 criatures alhora no és bona idea, ja que una condiciona a l'altra.
+És millor idea evolucionar per separat en escenaris preparats i després combinar-los.
+El que em passa evolucionanat a l'hora, és que quan una deixa d'evolucionar i desapareix del mapa, l'altra ja no evoluciona en un ecosistema real ja que l'altra ja no està.
+
+29 - Nomes evolucionen SP2
+35- solucio (pero no va al final)
+41 - sol (pero no va al final)
+45 - sol (pero no va al final)
+59 - sol prou bona. Només temps i sense speed
+
+2 hidden
+69 - FF direct
+70 - No FF direct
+83 - No FF direct
+82 - FF NO direct
+73 - No FF NO direct
+74 - NO FF unconnected
+75 - FF unconnected
+
+3 hidden
+76 - FF direct
+77 - No FF direct
+78 - FF NO direct
+79 - No FF NO direct
+80 - NO FF unconnected
+81 - FF unconnected
+
+fitness threshold a 50
+116 - Solució bona: feed_forward = True, initial_connection = full, node_add_prob = 0.2, node_delete_prob = 0.2, num_hidden = 0, num_inputs = 8, num_outputs = 1
+118 - Solució bona: Igual anterior + conn_add_prob = 0, conn_delete_prob = 0
+
+Pujo fitness threshold a 55
+
+119 - sOLUCIÓ BONA
