@@ -28,7 +28,7 @@ food_aux = []
 
 semaforo = threading.Semaphore(1);
 
-
+#class that represents the food of the blue creatures
 class Food:
     def __init__(self, rad):
         self.radius = rad
@@ -39,6 +39,7 @@ class Food:
     def draw(self, screen):
         pygame.draw.circle(screen, (0, 0, 100), self.pos, self.radius)
 
+#class that represents the food of the red creatures
 class Food2:
     def __init__(self, rad):
         self.radius = rad
@@ -49,7 +50,7 @@ class Food2:
     def draw(self, screen):
         pygame.draw.circle(screen, (200, 50, 0), self.pos, self.radius)
 
-
+#food initiation (Food1)
 food = [Food(20), Food(20), Food(20), Food(20), Food(20), Food(20), Food(20), Food(20), Food(20), Food(20), Food(20),
         Food(20), Food(20), Food(20), Food(20), Food(20), Food(20), Food(20), Food(20), Food(20), Food(20), Food(20),
         Food(20), Food(20), Food(20), Food(20), Food(20), Food(20), Food(20), Food(20), Food(20), Food(20), Food(20),
@@ -57,8 +58,8 @@ food = [Food(20), Food(20), Food(20), Food(20), Food(20), Food(20), Food(20), Fo
         Food(20), Food(20), Food(20), Food(20), Food(20), Food(20), Food(20), Food(20), Food(20), Food(20), Food(20),
         Food(20), Food(20), Food(20), Food(20), Food(20), Food(20), Food(20), Food(20), Food(20), Food(20), Food(20)]
 
+#food initiation (Food2)
 food2 = [Food2(20), Food2(20), Food2(20), Food2(20)]
-
 
 class Criatura1:
     def __init__(self, screen, start_time, id, rad, r, g, b):
@@ -78,6 +79,7 @@ class Criatura1:
         self.end = 0
         self.shield = 0
 
+    #update creature: check radars, hungry, collision and position.
     def update(self, cri, screen):
         # check speed
         # self.speed = 8
@@ -90,6 +92,7 @@ class Criatura1:
         self.radars.clear()
         self.radars_colors.clear()
 
+        #check 5 radars
         self.check_radar(self.angle + math.radians(-10), screen)
         self.check_radar(self.angle + math.radians(-5), screen)
         self.check_radar(self.angle + math.radians(0), screen)
@@ -98,10 +101,12 @@ class Criatura1:
 
         self.check_hungry()
 
+    #check if this creature has collisioned
     def check_collision(self, cri, screen):
         self.is_alive = True
         global food2
 
+        #check if it can eat Food2
         for i, f in enumerate(food2):
             dist = math.dist([self.pos[0], self.pos[1]], [f.pos[0], f.pos[1]])
             if dist < (self.radius + f.radius):
@@ -110,11 +115,13 @@ class Criatura1:
                 food2.pop(i)
                 food2.append(Food2(20))
 
+        #check if it has been eaten by another creature or can eat
         for c in cri:
             if (not (self.id == c.id)) and (c.get_alive()):
                 dist = math.dist([self.pos[0], self.pos[1]], [c.pos[0], c.pos[
                     1]])  # https://stackoverflow.com/questions/22135712/pygame-collision-detection-with-two-circles
                 # dist  = math.hypot(car.pos[0] - self.pos[0], car.pos[1] - self.pos[1])
+                # if 2 creatures collide, the once who has less radius dies
                 if dist < (self.radius + c.radius):
                     if (self.radius < c.radius):
                         self.is_alive = False
@@ -135,6 +142,7 @@ class Criatura1:
             if screen.get_at((int(self.pos[0]), int(self.pos[1]))) == (100, 100, 0, 255):
                 self.is_alive = False
 
+    #check distance and colors that radars detect
     def check_radar(self, degree, map):
         len = 0
         x = int(self.pos[0] + math.cos(degree) * len + math.cos(degree) * self.radius)
@@ -169,6 +177,7 @@ class Criatura1:
             self.radars_colors.append(25)
             self.radars_colors.append(25)
 
+    #displays the radars on the screen
     def draw_radar(self, screen):
 
         for r in self.radars:
@@ -177,6 +186,7 @@ class Criatura1:
                 pygame.draw.line(screen, (0, 255, 0), self.pos, pos, 1)
                 pygame.draw.circle(screen, (0, 255, 0), pos, 5)
 
+    #displays the creature on the screen
     def draw(self, screen):
         pygame.draw.circle(screen, (self.color[0], self.color[1], self.color[2]), (self.pos[0], self.pos[1]),
                            self.radius, 0)
@@ -189,15 +199,19 @@ class Criatura1:
         '''
         self.draw_radar(screen)
 
+    #check if the creature is still alive
     def get_alive(self):
         return self.is_alive
 
+    #fitness function
     def get_reward(self):
         return (((time.time() - self.time)) * (self.total_ate / 10))
 
+    #return time alive
     def get_time(self):
         return (time.time() - self.time)
 
+    #inputs recollection for NN
     def get_data(self):
         radars = self.radars
         ret = [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, self.pos[0] / 1500]
@@ -209,6 +223,7 @@ class Criatura1:
 
         return ret
 
+    #check if it has died of starvation and increases its hunger
     def check_hungry(self):
         self.hungry = self.hungry - 1
 
@@ -238,12 +253,7 @@ class Criatura2:
         self.shield = 0
         self.protected = 0
 
-    def getPos(self):
-        if self.id % 2 == 0:
-            return int(random.randint(self.radius + 1200, (screen_width - self.radius)))
-        else:
-            return int(random.randint(self.radius , (screen_width - self.radius - 1200)))
-
+    #update creature: check radars, hungry, collision and position.
     def update(self, cri, screen):
         # check speed
         # self.speed = 8
@@ -256,6 +266,7 @@ class Criatura2:
         self.radars.clear()
         self.radars_colors.clear()
 
+        #check 5 radars
         self.check_radar(self.angle + math.radians(-45), screen)
         self.check_radar(self.angle + math.radians(-10), screen)
         self.check_radar(self.angle + math.radians(-5), screen)
@@ -266,10 +277,12 @@ class Criatura2:
 
         self.check_hungry()
 
+    # check if this creature has collisioned
     def check_collision(self, cri, screen):
         self.is_alive = True
         global food_aux
 
+        # check if it can eat Food1
         for i, f in enumerate(food_aux):
             dist = math.dist([self.pos[0], self.pos[1]], [f.pos[0], f.pos[1]])
             if dist < (self.radius + f.radius):
@@ -284,6 +297,8 @@ class Criatura2:
                 else:
                     self.protected -= 0.5
                     self.hungry -= 10
+
+        #check if it has been eaten by another creature or can eat
         for c in cri:
             if (not (self.id == c.id)) and (c.get_alive()):
                 dist = math.dist([self.pos[0], self.pos[1]], [c.pos[0], c.pos[
@@ -313,6 +328,7 @@ class Criatura2:
         else:
             return False
 
+    # check distance and colors that radars detect
     def check_radar(self, degree, map):
         len = 0
         x = int(self.pos[0] + math.cos(degree) * len + math.cos(degree) * self.radius)
@@ -352,6 +368,7 @@ class Criatura2:
         else:
             self.radars_colors.append(0)
 
+    # displays the radars on the screen
     def draw_radar(self, screen):
 
         for r in self.radars:
@@ -359,6 +376,7 @@ class Criatura2:
             pygame.draw.line(screen, (0, 255, 0), self.pos, pos, 1)
             pygame.draw.circle(screen, (0, 255, 0), pos, 5)
 
+    # displays the creature on the screen
     def draw(self, screen):
         if self.shield <= 0.5:
             pygame.draw.circle(screen, (self.color[0], self.color[1], self.color[2]), (self.pos[0], self.pos[1]),
@@ -375,9 +393,11 @@ class Criatura2:
 
         self.draw_radar(screen)
 
+    # check if the creature is still alive
     def get_alive(self):
         return self.is_alive
 
+    # fitness function
     def get_reward(self):
         #dist = math.dist([self.pos[0], self.pos[1]], [food[0].pos[0], food[0].pos[1]])
         #dist2 = math.dist([self.pos[0], self.pos[1]], [food[1].pos[0], food[1].pos[1]])
@@ -392,9 +412,11 @@ class Criatura2:
         #return (self.total_ate + self.protected * self.total_ate + self.get_time())
         return self.get_time() * 0.4 + self.total_ate * 40 + self.protected * self.total_ate
 
+    # return time alive
     def get_time(self):
         return (time.time() - self.time)
 
+    # inputs recollection for NN
     def get_data(self):
         radars = self.radars
         ret = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -406,6 +428,7 @@ class Criatura2:
 
         return ret
 
+    #check if it has died of starvation and increases its hunger
     def check_hungry(self):
         self.hungry = self.hungry - 1
 
@@ -414,7 +437,7 @@ class Criatura2:
         if self.get_time() > 500:
             self.is_alive = False
 
-
+#Update screen and it manages the evolution of Criatura1
 def run_sp1(genomes, config):
     bg = 25, 25, 25
     screen.fill(bg)
@@ -513,7 +536,7 @@ def run_sp1(genomes, config):
         semaforo.release()
         time.sleep(0.01)
 
-
+#Update screen and it manages the evolution of Criatura2
 def run_sp2(genomes, config):
     # Init NEAT
     nets = []
@@ -610,7 +633,7 @@ def run_sp2(genomes, config):
         semaforo.release()
         time.sleep(0.01)
 
-
+#It generates the population and read initialize NEAT things such as reports, directories and different configurations
 def run_neat(config, id_specie):
     # Create core evolution algorithm class
     p = neat.Population(config)
@@ -685,7 +708,7 @@ def run_neat(config, id_specie):
             pickle.dump(winner, f)
             f.close()
 
-
+#Read configuration file and launch 2 threads, once per creature
 if __name__ == "__main__":
     # Set configuration file
     config_path = "./config-feedforward.txt"
