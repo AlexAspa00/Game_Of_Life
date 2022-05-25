@@ -120,7 +120,7 @@ class Criatura1:
             if (not (self.id == c.id)) and (c.get_alive()):
                 dist = math.dist([self.pos[0], self.pos[1]], [c.pos[0], c.pos[
                     1]])  # https://stackoverflow.com/questions/22135712/pygame-collision-detection-with-two-circles
-                # dist  = math.hypot(car.pos[0] - self.pos[0], car.pos[1] - self.pos[1])
+                # dist  = math.hypot(c.pos[0] - self.pos[0], c.pos[1] - self.pos[1])
                 # if 2 creatures collide, the once who has less radius dies
                 if dist < (self.radius + c.radius):
                     if (self.radius < c.radius):
@@ -303,7 +303,7 @@ class Criatura2:
             if (not (self.id == c.id)) and (c.get_alive()):
                 dist = math.dist([self.pos[0], self.pos[1]], [c.pos[0], c.pos[
                     1]])  # https://stackoverflow.com/questions/22135712/pygame-collision-detection-with-two-circles
-                # dist  = math.hypot(car.pos[0] - self.pos[0], car.pos[1] - self.pos[1])
+                # dist  = math.hypot(c.pos[0] - self.pos[0], c.pos[1] - self.pos[1])
                 if dist < (self.radius + c.radius):
                     if self.radius < c.radius:
                         if self.shield < 0.5:
@@ -465,7 +465,7 @@ def run_sp1(genomes, config):
         nets.append(net)
         g.fitness = 0
 
-        # Init my cars
+        # Init my creatures
         total_criatures[0].append(Criatura1(screen, time.time(), i, 40, 255, 0, 0))
         i = i + 1
 
@@ -488,7 +488,7 @@ def run_sp1(genomes, config):
             elif criatures.speed > 20:
                 criatures.speed = 20
 
-        # Update car and fitness
+        # Update creatures and fitness
         remain_cri = 0
         cri_aux = []
         i = 0
@@ -553,7 +553,7 @@ def run_sp2(genomes, config):
         nets.append(net)
         g.fitness = 0
 
-        # Init my cars
+        # Init my creatures
         total_criatures[1].append(Criatura2(screen, time.time(), i + 100, 25, 0, 0, 255))
         i = i + 1
 
@@ -586,7 +586,7 @@ def run_sp2(genomes, config):
             if criatura.shield > 1:
                 criatura.shield = 1
 
-        # Update car and fitness
+        # Update creatures and fitness
         remain_cri = 0
         cri_aux = []
         i = 0

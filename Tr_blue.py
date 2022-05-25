@@ -133,7 +133,7 @@ class Criatura2:
             if (not (self.id == c.id)) and (c.get_alive()):
                 dist = math.dist([self.pos[0], self.pos[1]], [c.pos[0], c.pos[
                     1]])  # https://stackoverflow.com/questions/22135712/pygame-collision-detection-with-two-circles
-                # dist  = math.hypot(car.pos[0] - self.pos[0], car.pos[1] - self.pos[1])
+                # dist  = math.hypot(c.pos[0] - self.pos[0], c.pos[1] - self.pos[1])
                 if dist < (self.radius + c.radius):
                     if self.radius < c.radius:
                         if self.shield < 0.5:
@@ -329,7 +329,7 @@ def run_sp2(genomes, config):
         for i in range(0, len(food)):
             food_aux.append(food[i])
 
-        # Init my cars
+        # Init my creatures
         total_criatures[1].append(Criatura2(screen, time.time(), i + 100, 25, 0, 0, 255, food_aux))
         i = i + 1
 
@@ -377,7 +377,7 @@ def run_sp2(genomes, config):
             if criatura.shield > 1:
                 criatura.shield = 1
             '''
-        # Update car and fitness
+        # Update creatures and fitness
         remain_cri = 0
         cri_aux = []
 
