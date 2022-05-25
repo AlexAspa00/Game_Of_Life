@@ -1,6 +1,6 @@
 <h1>Virtual ecosystem using NEAT algorism</h1>
 Author: Àlex Aspa Garcia
-<h2>Introduciton</h2>
+<h2>Introduction</h2>
 The aim of this work was the creation of an intelligent ecosystem where different creatures must learn through evolution to survive in it automatically. The creatures will evolve their neural networks, which we could say is their brain, according to their experiences in this virtual environment. By evaluating their success in each simulation, evolution will form creatures that are more capable of surviving, since they will have learned more rules and situations of the scenario.
 
 This creation has made it possible to explore and work with the NEAT algorithm that aims to evolve the topologies of artificial neural networks from a minimal structure. The evolution of NN is made with a genetic algorithm which will select the best combinations of neural network to generate a better one. In other words, NEAT is an algorithm that evolves neural networks with a genetic algorithm.
